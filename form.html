@@ -1,0 +1,282 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Generations</title>
+        <link rel = "icon" href = "linkdenimage.jpeg" 
+        type = "image/x-icon">
+</head>
+    
+<body>
+  <div class="container">
+      <h1 class="brand"><span>Generations</span> Job Requesting Form For Seniors</h1>
+    <div class="wrapper">
+      <div class="company-info">
+        <h3>Message from the Generations Team</h3>
+        <ul>
+          <li> On this page, you will be able to submit your job request! Please note that these are requests and due to our limited amount of volunteers, we may not be able to accommodate you, however, we are working our hardest! You should receive an email within <b>2 days of your request submission regarding the confirmation of your job.</b>
+</li>
+            <br>
+            <li>Thank You!
+- Generations Team</li>
+        </ul>
+      </div>
+      <div class="contact">
+        <div class="alert">Your job request has been submitted!</div>
+        <form id="contactForm">
+          <p>
+            <label>Full Name</label>
+            <input type="text" name="name" id="name" required>
+          </p>
+            <p>
+            <label>Home Address</label>
+            <input type="text" name="address" id="address" required>
+          </p>
+            <p>Type of Job</p>
+              <select id="job" name="job" required>
+    <option value="lawn mowing" onclick="signin()">Lawn Mowing</option>
+    <option value="leaf raking">Leaf Raking</option>
+     <option value="tech support">Tech Support</option>             
+  </select>
+            <p>Estimated Time Required for the Job</p>
+              <select id="time" name="time" required>
+    <option value="15 - 30 minutes">15 - 30 minutes</option>
+    <option value="30 - 45 minutes">30 - 45 minutes</option>
+     <option value="45 minutes - 1 hour">45 minutes - 1 hour</option>             
+  </select>
+            <label>
+    Desired date for completion (Please select one week in advance to give our Volunteers time)
+    <input type="date" name="date" id="date" min="2021-04-01" max="2021-04-" required>
+    <span class="validity"></span>
+  </label>
+            
+          <p>
+            <label>Email Address (i.e example@gmail.com)</label>
+            <input type="email" name="email" id="email" required>
+          </p>
+            
+          <p>
+            <label>Phone Number</label>
+            <input type="text" name="phone" id="phone">
+          </p>
+
+                      <p class="full">
+            <label>If you selected Tech Support, please best describe any issues you are having for our Volunteer</label>
+            <textarea name="tech" rows="5" id="tech"></textarea>
+          </p>
+            
+            
+          <p class="full">
+            <label>Additional Message or Concerns for our Volunteer</label>
+            <textarea name="message" rows="5" id="message"></textarea>
+          </p>
+            
+            
+          <p class="full">
+              <br>
+            <button type="submit">Submit</button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+  <script src="main.js"></script>
+</body>
+    <script>
+    var config = {
+  apiKey: "AIzaSyBw2Q7tYDBpia5qQq4-Tx72qkT0D5YUmsY",
+  authDomain: "generations-b7683.firebaseapp.com",
+  databaseURL: "https://generations-b7683.firebaseio.com/",
+  projectId: "generations-b7683",
+  storageBucket: "gs://generations-b7683.appspot.com",
+  messagingSenderId: "AAAAQpSikfI:APA91bE7VG8XZCUG6njgRHRDCxBHdenmNkrMOM4WvC59YF1lbXaKalE_ZuuPd5PV5XMTsTZLiXm7qpeU6y-9pZL2dS9MnnpvNzR0CMHVLXUxyuJ-sijYgA8UrWv5vD7Zdl3FHL6vvs3n"
+};
+firebase.initializeApp(config);
+
+// Reference messages collection
+var messagesRef = firebase.database().ref('messages');
+
+// Listen for form submit
+document.getElementById('contactForm').addEventListener('submit', submitForm);
+
+// Submit form
+function submitForm(e){
+  e.preventDefault();
+
+  // Get values
+  var name = getInputVal('name');
+  var email = getInputVal('email');
+  var phone = getInputVal('phone');
+  var message = getInputVal('message');
+  var address = getInputVal('address');
+    var date = getInputVal('date');
+    var job = getInputVal('job');
+    var time = getInputVal('time');
+    var tech = getInputVal('tech');
+
+  // Save message
+  saveMessage(name, email, phone, message, address, date, job, time, tech);
+
+  // Show alert
+  document.querySelector('.alert').style.display = 'block';
+
+  // Hide alert after 3 seconds
+  setTimeout(function(){
+    document.querySelector('.alert').style.display = 'none';
+  },3000);
+
+  // Clear form
+  document.getElementById('contactForm').reset();
+}
+
+// Function to get get form values
+function getInputVal(id){
+  return document.getElementById(id).value;
+}
+
+// Save message to firebase
+function saveMessage(name,email, phone, message, address, date, job, time, tech){
+  var newMessageRef = messagesRef.push();
+  newMessageRef.set({
+    name: name,
+    email:email,
+    phone:phone,
+    message:message,
+    address:address,
+      date:date,
+      job:job,
+      time:time,
+      tech:tech
+  });
+}
+        function myFunction() {
+  alert('Your job has succesfully been requested and we will be in touch with you shortly. Thank you for using Generations!');
+}
+        
+    </script>
+    
+    <style>
+    *{
+  box-sizing: border-box;
+}
+/*Here is where you edit the colour*/
+body{
+  background:#4c6687;
+  color:black;
+  line-height:1.6;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding:1em;
+}
+
+.container{
+  max-width:1170px;
+  margin-left:auto;
+  margin-right:auto;
+  padding:1em;
+}
+
+        .job{
+            width:150px;
+        }
+
+ul{
+  list-style: none;
+  padding:0;
+}
+
+.brand{
+  text-align: center;
+}
+
+.brand span{
+  color:#fff;
+}
+
+.wrapper{
+  box-shadow: 0 0 20px 0 rgba(72,94,116,0.7);
+}
+
+.wrapper > *{
+  padding: 1em;
+}
+
+.company-info{
+  background:#c9e6ff;
+}
+
+.company-info h3, .company-info ul{
+  text-align: center;
+  margin:0 0 1rem 0;
+}
+
+.contact{
+  background:#f9feff;
+}
+
+/* FORM STYLES */
+.contact form{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap:20px;
+}
+
+.contact form label{
+  display:block;
+}
+
+.contact form p{
+  margin:0;
+}
+
+.contact form .full{
+  grid-column: 1 / 3;
+}
+
+.contact form button, .contact form input, .contact form textarea, .job{
+  width:100%;
+  padding:1em;
+  border:1px solid #c9e6ff;
+}
+
+.contact form button{
+  background:#c9e6ff;
+  border:0;
+  text-transform: uppercase;
+}
+
+.contact form button:hover,.contact form button:focus{
+  background:#92bde7;
+  color:#4c6687;
+  outline:0;
+  transition: background-color 2s ease-out;
+}
+
+.alert{
+  text-align: center;
+  padding:10px;
+  background:#79c879;
+  color:#fff;
+  margin-bottom:10px;
+  display:none;
+}
+
+/* LARGE SCREENS */
+@media(min-width:700px){
+  .wrapper{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+
+  .wrapper > *{
+    padding:2em;
+  }
+
+  .company-info h3, .company-info ul, .brand{
+    text-align: left;
+  }
+}
+    </style>
+</html>
