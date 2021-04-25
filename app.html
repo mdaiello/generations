@@ -29,6 +29,7 @@ application submission</b> regarding the status of your application.</li>
             <label>Full Name</label>
             <input type="text" name="name" id="name" required>
           </p>
+            
             <p>
             <label>Age (Note: You must be at least 14 years old)</label>
             <input type="text" name="address" id="address" required>
@@ -38,20 +39,37 @@ application submission</b> regarding the status of your application.</li>
             <input type="email" name="email" id="email" required>
           </p>
             
+                  <p>
+            <label>Home Address</label>
+            <input type="text" name="home" id="home">
+          </p>
+            
+            <p>
+            <label>Postal Code</label>
+            <input type="text" name="code" id="code">
+          </p>
+            
           <p>
             <label>Phone Number</label>
             <input type="text" name="phone" id="phone">
           </p>
             
-                      <p>
-            <label>Can you supply your own equipment (i.e. Lawnmower, Yard Bags, Snow Shovel...etc) (Yes or No)</label>
-            <input type="text" name="equipment" id="equipment">
-          </p>
-            
-            <p>
-            <label>Do you have a G1 or G2 license? (Yes or No)</label>
-            <input type="text" name="license" id="license">
-          </p>
+            <p>Can you supply your own equipment (i.e. Lawnmower, Yard Bags, Snow Shovel...etc) (Yes or No)</p>
+              <select id="equipment" name="equipment" required style="height: 45px;">
+    <option value="yes">Yes</option>
+    <option value="no">No</option>          
+  </select>
+            <p>Do you have a G2/G license? (Yes or No)</p>
+              <select id="license" name="license" required style="height: 45px;">
+    <option value="yes">Yes</option>
+    <option value="no">No</option>          
+  </select>
+            <p>First choice for jobs</p>
+              <select id="interest" name="interest" required style="height: 45px;">
+    <option value="lawn mowing">Lawn Mowing</option>
+    <option value="leaf raking">Leaf Raking</option>
+     <option value="tech support">Tech Support</option>             
+  </select>
 
                       <p class="full">
             <label>Why do you want to volunteer at Generations? (Minimum: 2 sentences)</label>
@@ -112,8 +130,12 @@ function submitForm(e){
     var qualities = getInputVal('qualities');
     var equipment = getInputVal('equipment');
     var license = getInputVal('license');
+    var home = getInputVal('home');
+    var code = getInputVal('code');
+    var interest = getInputVal('interest');
+    
   // Save message
-  saveMessage(name, email, phone, address, whyvol, experience, qualities, equipment, license);
+  saveMessage(name, email, phone, address, whyvol, experience, qualities, equipment, license, home, code, interest);
 
   // Show alert
   document.querySelector('.alert').style.display = 'block';
@@ -133,7 +155,7 @@ function getInputVal(id){
 }
 
 // Save message to firebase
-function saveMessage(name, email, phone, address, whyvol, experience, qualities, equipment, license){
+function saveMessage(name, email, phone, address, whyvol, experience, qualities, equipment, license, home, code, interest){
   var newMessageRef = messagesRef.push();
   newMessageRef.set({
     name: name,
@@ -144,7 +166,10 @@ function saveMessage(name, email, phone, address, whyvol, experience, qualities,
       experience:experience,
       qualities: qualities,
       equipment: equipment,
-      license: license
+      license: license,
+      home:home,
+      code:code,
+      interest:interest
   });
 }
         function myFunction() {
@@ -158,10 +183,10 @@ function saveMessage(name, email, phone, address, whyvol, experience, qualities,
 }
 /*Here is where you edit the colour*/
 body{
-  background:#4c6687;
+  background: grey;
   color:black;
   line-height:1.6;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Poppins', sans-serif;
   padding:1em;
 }
 
@@ -190,7 +215,7 @@ ul{
 }
 
 .wrapper{
-  box-shadow: 0 0 20px 0 rgba(72,94,116,0.7);
+  box-shadow: 0 0 20px 0;
 }
 
 .wrapper > *{
@@ -198,7 +223,7 @@ ul{
 }
 
 .company-info{
-  background:#c9e6ff;
+  background:white;
 }
 
 .company-info h3, .company-info ul{
@@ -232,19 +257,20 @@ ul{
 .contact form button, .contact form input, .contact form textarea, .job{
   width:100%;
   padding:1em;
-  border:1px solid #c9e6ff;
+  border:1px solid ;
 }
 
 .contact form button{
-  background:#c9e6ff;
-  border:0;
+  background:grey;
+  border:1;
+        border-color: black;
   text-transform: uppercase;
 }
 
 .contact form button:hover,.contact form button:focus{
-  background:#92bde7;
-  color:dodgerblue;
-  outline:0;
+  background:black;
+  color:grey;
+  outline:1;
   transition: background-color 2s ease-out;
 }
 

@@ -29,28 +29,7 @@
             <label>Full Name</label>
             <input type="text" name="name" id="name" required>
           </p>
-            <p>
-            <label>Home Address</label>
-            <input type="text" name="address" id="address" required>
-          </p>
-            <p>Type of Job</p>
-              <select id="job" name="job" required>
-    <option value="lawn mowing" onclick="signin()">Lawn Mowing</option>
-    <option value="leaf raking">Leaf Raking</option>
-     <option value="tech support">Tech Support</option>             
-  </select>
-            <p>Estimated Time Required for the Job</p>
-              <select id="time" name="time" required>
-    <option value="15 - 30 minutes">15 - 30 minutes</option>
-    <option value="30 - 45 minutes">30 - 45 minutes</option>
-     <option value="45 minutes - 1 hour">45 minutes - 1 hour</option>             
-  </select>
-            <label>
-    Desired date for completion (Please select one week in advance to give our Volunteers time)
-    <input type="date" name="date" id="date" min="2021-04-01" max="2021-04-" required>
-    <span class="validity"></span>
-  </label>
-            
+
           <p>
             <label>Email Address (i.e example@gmail.com)</label>
             <input type="email" name="email" id="email" required>
@@ -61,6 +40,40 @@
             <input type="text" name="phone" id="phone">
           </p>
 
+                    <p>
+            <label>Home Address</label>
+            <input type="text" name="address" id="address" required>
+          </p>
+            
+                    <p>
+            <label>Postal Code</label>
+            <input type="text" name="code" id="code" required>
+          </p>
+            
+             <p>
+            <label>Approximate Square Footage of your Lawn</label>
+            <input type="text" name="size" id="size">
+          </p>
+            
+            
+            <p>Type of Job (Seasonal)</p>
+              <select id="job" name="job" required style="height: 45px;">
+    <option value="lawn mowing">Lawn Mowing</option>
+    <option value="leaf raking">Leaf Raking</option>
+     <option value="tech support">Tech Support</option>             
+  </select>
+            
+            <p>Estimated Time Required for the Job</p>
+              <select id="time" name="time" required style="height: 45px;">
+    <option value="15 - 30 minutes">15 - 30 minutes</option>
+    <option value="30 - 45 minutes">30 - 45 minutes</option>
+     <option value="45 minutes - 1 hour">45 minutes - 1 hour</option>             
+  </select>
+                        <label>
+    Desired date for completion (Please select one week in advance to give our Volunteers time)
+    <input type="date" name="date" id="date" min="2021-04-01" max="2021-04-" required>
+    <span class="validity"></span>
+  </label>
                       <p class="full">
             <label>If you selected Tech Support, please best describe any issues you are having for our Volunteer</label>
             <textarea name="tech" rows="5" id="tech"></textarea>
@@ -116,9 +129,12 @@ function submitForm(e){
     var job = getInputVal('job');
     var time = getInputVal('time');
     var tech = getInputVal('tech');
+    var code = getInputVal('code');
+    var size = getInputVal('size');
+    
 
   // Save message
-  saveMessage(name, email, phone, message, address, date, job, time, tech);
+  saveMessage(name, email, phone, message, address, date, job, time, tech, code, size);
 
   // Show alert
   document.querySelector('.alert').style.display = 'block';
@@ -138,7 +154,7 @@ function getInputVal(id){
 }
 
 // Save message to firebase
-function saveMessage(name,email, phone, message, address, date, job, time, tech){
+function saveMessage(name,email, phone, message, address, date, job, time, tech, code){
   var newMessageRef = messagesRef.push();
   newMessageRef.set({
     name: name,
@@ -149,7 +165,9 @@ function saveMessage(name,email, phone, message, address, date, job, time, tech)
       date:date,
       job:job,
       time:time,
-      tech:tech
+      tech:tech,
+      code:code,
+      size:size
   });
 }
         function myFunction() {
@@ -159,15 +177,15 @@ function saveMessage(name,email, phone, message, address, date, job, time, tech)
     </script>
     
     <style>
-    *{
+*{
   box-sizing: border-box;
 }
 /*Here is where you edit the colour*/
 body{
-  background:#4c6687;
+  background: grey;
   color:black;
   line-height:1.6;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Poppins', sans-serif;
   padding:1em;
 }
 
@@ -196,7 +214,7 @@ ul{
 }
 
 .wrapper{
-  box-shadow: 0 0 20px 0 rgba(72,94,116,0.7);
+  box-shadow: 0 0 20px 0;
 }
 
 .wrapper > *{
@@ -204,7 +222,7 @@ ul{
 }
 
 .company-info{
-  background:#c9e6ff;
+  background:white;
 }
 
 .company-info h3, .company-info ul{
@@ -238,19 +256,20 @@ ul{
 .contact form button, .contact form input, .contact form textarea, .job{
   width:100%;
   padding:1em;
-  border:1px solid #c9e6ff;
+  border:1px solid ;
 }
 
 .contact form button{
-  background:#c9e6ff;
-  border:0;
+  background:grey;
+  border:1;
+        border-color: black;
   text-transform: uppercase;
 }
 
 .contact form button:hover,.contact form button:focus{
-  background:#92bde7;
-  color:#4c6687;
-  outline:0;
+  background:black;
+  color:grey;
+  outline:1;
   transition: background-color 2s ease-out;
 }
 
